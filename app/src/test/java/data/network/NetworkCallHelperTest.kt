@@ -2,7 +2,6 @@ package data.network
 
 import com.example.networkproject.data.Employee
 import com.example.networkproject.data.network.HttpUrlConnectionNetworkCallHelperImpl
-import io.mockk.impl.annotations.RelaxedMockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
@@ -10,24 +9,15 @@ import org.junit.Assert.assertThrows
 import org.junit.Rule
 import org.junit.Test
 import test_shared.MainCoroutineRule
-import java.net.HttpURLConnection
 import java.net.MalformedURLException
-import java.net.URL
 
 @ExperimentalCoroutinesApi
 class NetworkCallHelperTest {
     @get:Rule
     var coroutineRule = MainCoroutineRule()
 
-    @RelaxedMockK lateinit var url: URL
-    @RelaxedMockK lateinit var urlConnection: HttpURLConnection
-
     @Test
     fun onNetworkCall_getEmployees() {
-        //mockkConstructor(URL::class)
-        //every { constructedWith<URL>(OfTypeMatcher<String>(String::class)) } returns url
-        //every { url.openConnection() } returns urlConnection
-        //every { urlConnection.inputStream } returns fake_response.byteInputStream()
         val networkCallHelper = HttpUrlConnectionNetworkCallHelperImpl(coroutineRule.testDispatcher)
         runBlocking {
             val employees = networkCallHelper.getRequest("https://jsonplaceholder.typicode.com/users")
