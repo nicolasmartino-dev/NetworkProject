@@ -1,11 +1,8 @@
 package data.network
 
-import com.example.networkproject.data.network.Employee
-import com.example.networkproject.data.network.NetworkCallHelperImpl
-import io.mockk.OfTypeMatcher
-import io.mockk.every
+import com.example.networkproject.data.Employee
+import com.example.networkproject.data.network.HttpUrlConnectionNetworkCallHelperImpl
 import io.mockk.impl.annotations.RelaxedMockK
-import io.mockk.mockkConstructor
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
@@ -31,17 +28,16 @@ class NetworkCallHelperTest {
         //every { constructedWith<URL>(OfTypeMatcher<String>(String::class)) } returns url
         //every { url.openConnection() } returns urlConnection
         //every { urlConnection.inputStream } returns fake_response.byteInputStream()
-        val networkCallHelper = NetworkCallHelperImpl(coroutineRule.testDispatcher)
+        val networkCallHelper = HttpUrlConnectionNetworkCallHelperImpl(coroutineRule.testDispatcher)
         runBlocking {
             val employees = networkCallHelper.getRequest("https://jsonplaceholder.typicode.com/users")
             Assert.assertTrue(!employees.isNullOrEmpty())
         }
-
     }
 
     @Test
     fun onNetworkCall_withEmptyUrl_shouldThrowError() {
-        val networkCallHelper = NetworkCallHelperImpl(coroutineRule.testDispatcher)
+        val networkCallHelper = HttpUrlConnectionNetworkCallHelperImpl(coroutineRule.testDispatcher)
         assertThrows(MalformedURLException::class.java) {
             runBlocking {
                 networkCallHelper.getRequest("")

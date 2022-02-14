@@ -3,7 +3,7 @@ package com.example.networkproject.di.module.data
 import com.example.networkproject.data.EmployeesApi
 import com.example.networkproject.data.EmployeesApiImpl
 import com.example.networkproject.data.network.NetworkCallHelper
-import com.example.networkproject.data.network.NetworkCallHelperImpl
+import com.example.networkproject.data.network.HttpUrlConnectionNetworkCallHelperImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -17,5 +17,5 @@ abstract class DataModule {
     abstract fun provideEmployeesApi(employeesApi: EmployeesApiImpl): EmployeesApi
 
     @Binds
-    abstract fun provideNetworkCallHelper(networkCallHelper: NetworkCallHelperImpl): NetworkCallHelper
+    abstract fun provideNetworkCallHelper(networkCallHelper: HttpUrlConnectionNetworkCallHelperImpl): NetworkCallHelper
 }

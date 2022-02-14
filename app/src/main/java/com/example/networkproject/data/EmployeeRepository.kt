@@ -1,7 +1,6 @@
 package com.example.networkproject.data
 
 import com.example.networkproject.annotation.ApplicationScope
-import com.example.networkproject.data.network.Employee
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock

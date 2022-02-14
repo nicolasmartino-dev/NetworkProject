@@ -1,3 +1,5 @@
+
+
 package com.example.networkproject.data.network
 
 import com.example.networkproject.annotation.IoDispatcher
@@ -14,10 +16,11 @@ interface NetworkCallHelper {
     suspend fun getRequest(sUrl: String): String?
 }
 
-class NetworkCallHelperImpl @Inject constructor(
+class HttpUrlConnectionNetworkCallHelperImpl @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher
 ) : NetworkCallHelper {
 
+    @Suppress("BlockingMethodInNonBlockingContext")
     override suspend fun getRequest(sUrl: String): String? = withContext(ioDispatcher) {
         val inputStream: InputStream
         var result: String? = null
@@ -52,10 +55,3 @@ class NetworkCallHelperImpl @Inject constructor(
         result
     }
 }
-
-data class Employee(
-    val id: Int,
-    val name: String,
-    val username: String,
-    val email: String
-)
