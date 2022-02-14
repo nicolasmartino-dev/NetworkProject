@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class EmployeeRepository @Inject constructor(
     private val employeeRemoteDataSource: EmployeeRemoteDataSource,
-    @ApplicationScope private val externalScope: CoroutineScope
+    @ApplicationScope private val externalScope: CoroutineScope,
 ) {
 
     // Mutex to make writes to cached values thread-safe.
