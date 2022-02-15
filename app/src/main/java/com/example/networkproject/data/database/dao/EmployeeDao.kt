@@ -6,25 +6,25 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.networkproject.data.database.entities.EmployeeData
+import com.example.networkproject.data.database.entities.Employee
 
 @Dao
 interface EmployeeDao {
-    @Query("SELECT * FROM employeedata")
-    fun getAll(): List<EmployeeData>
-
-    @Query("SELECT * FROM employeedata WHERE uid IN (:employeeIds)")
-    fun loadAllByIds(employeeIds: IntArray): List<EmployeeData>
-
-    @Query("SELECT * FROM employeedata WHERE name LIKE :name LIMIT 1")
-    fun findByName(name: String): EmployeeData
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg employees: EmployeeData)
+    suspend fun insertEmployees(vararg users: Employee)
 
     @Update
-    fun updateEmployees(vararg employee: EmployeeData)
+    suspend fun updateEmployees(vararg users: Employee)
 
     @Delete
-    fun delete(employee: EmployeeData)
+    suspend fun deleteEmployees(vararg users: Employee)
+
+    @Query("SELECT * FROM employee")
+    suspend fun loadEmployees(): List<Employee>
+
+    @Query("SELECT * FROM employee WHERE id = :id")
+    suspend fun loadEmployeeById(id: Int): Employee
+
+    @Query("SELECT * from employee WHERE name = :name")
+    suspend fun loadEmployeeByName(name: String): Employee
 }

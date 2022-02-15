@@ -13,10 +13,9 @@ import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.networkproject.data.Employee
+import com.example.networkproject.data.database.entities.Employee
 import com.example.networkproject.ui.theme.NetworkProjectTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,9 +46,9 @@ class MainActivity : ComponentActivity() {
     fun EmployeeListItem(employee: Employee) {
         Row {
             Column {
-                Text(text = employee.name, style = typography.h6)
-                Text(text = employee.username, style = typography.body1)
-                Text(text = employee.email, style = typography.caption)
+                Text(text = employee.name.orEmpty(), style = typography.h6)
+                Text(text = employee.username.orEmpty(), style = typography.body1)
+                Text(text = employee.email.orEmpty(), style = typography.caption)
             }
         }
     }
