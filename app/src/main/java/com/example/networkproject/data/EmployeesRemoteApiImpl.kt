@@ -1,6 +1,7 @@
 package com.example.networkproject.data
 
 import com.example.networkproject.annotation.IoDispatcher
+import com.example.networkproject.data.database.entities.Employee
 import com.example.networkproject.data.network.NetworkCallHelper
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
@@ -11,10 +12,15 @@ import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 
-class EmployeesApiImpl @Inject constructor(
+
+interface EmployeesRemoteApi {
+    suspend fun fetchEmployees(): List<Employee>
+}
+
+class EmployeesRemoteApiImpl @Inject constructor(
     private val networkCallHelper: NetworkCallHelper,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
-) : EmployeesApi {
+) : EmployeesRemoteApi {
     override suspend fun fetchEmployees(): List<Employee> = withContext(ioDispatcher) {
         val result = networkCallHelper.getRequest("https://jsonplaceholder.typicode.com/users")
         val gson = GsonBuilder().create()
@@ -30,10 +36,3 @@ class EmployeesApiImpl @Inject constructor(
         }
     }
 }
-
-data class Employee(
-    val id: Int,
-    val name: String,
-    val username: String,
-    val email: String
-)
