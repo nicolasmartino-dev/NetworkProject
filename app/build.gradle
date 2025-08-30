@@ -8,6 +8,10 @@ plugins {
 android {
     namespace 'com.example.networkproject'
     compileSdk 34
+    
+    testFixtures {
+        enable = true
+    }
 
     defaultConfig {
         applicationId "com.example.networkproject"
@@ -38,15 +42,7 @@ android {
         }
     }
     
-    sourceSets {
-        // Shared test sources
-        test {
-            java.srcDirs += 'src/sharedTest/java'
-        }
-        androidTest {
-            java.srcDirs += 'src/sharedTest/java'
-        }
-    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -72,6 +68,16 @@ android {
 
 dependencies {
     def lifecycle_version = '2.6.2'
+    
+    // Test fixtures dependencies (shared test code)
+    testFixturesImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3'
+    testFixturesImplementation 'junit:junit:4.13.2'
+    
+    // Use test fixtures in unit tests
+    testImplementation(testFixtures(project(":app")))
+    
+    // Use test fixtures in Android tests
+    androidTestImplementation(testFixtures(project(":app")))
     
     implementation 'androidx.core:core-ktx:1.12.0'
     implementation "androidx.compose.ui:ui:$compose_version"

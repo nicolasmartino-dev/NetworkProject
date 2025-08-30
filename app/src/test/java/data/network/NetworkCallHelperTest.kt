@@ -8,7 +8,7 @@ import org.junit.Assert
 import org.junit.Assert.assertThrows
 import org.junit.Rule
 import org.junit.Test
-import test_shared.MainCoroutineRule
+import com.example.networkproject.test.MainCoroutineRule
 import java.net.MalformedURLException
 
 @ExperimentalCoroutinesApi

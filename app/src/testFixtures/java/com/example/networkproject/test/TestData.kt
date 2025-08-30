@@ -1,4 +1,4 @@
-package test_shared
+package com.example.networkproject.test
 
 import com.example.networkproject.data.database.entities.Employee
 

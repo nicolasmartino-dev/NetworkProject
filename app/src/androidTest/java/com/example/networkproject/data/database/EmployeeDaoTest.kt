@@ -12,7 +12,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import test_shared.TestData
+import com.example.networkproject.test.TestData
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Named

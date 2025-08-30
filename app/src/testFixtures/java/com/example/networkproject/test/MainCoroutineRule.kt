@@ -1,4 +1,4 @@
-package test_shared
+package com.example.networkproject.test
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

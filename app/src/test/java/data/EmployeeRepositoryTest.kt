@@ -17,8 +17,8 @@ import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import test_shared.MainCoroutineRule
-import test_shared.TestData
+import com.example.networkproject.test.MainCoroutineRule
+import com.example.networkproject.test.TestData
 import kotlin.test.assertEquals
 
 @ExperimentalCoroutinesApi
