@@ -1,16 +1,26 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
     id 'com.google.dagger.hilt.android'
+}
+
+// Configure KSP
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+    arg("room.incremental", "true")
+    arg("room.expandProjection", "true")
 }
 
 android {
     namespace 'com.example.networkproject'
     compileSdk 34
     
-    testFixtures {
-        enable = true
+    // Only include shared code in unit tests to avoid duplicate content roots warning
+    sourceSets {
+        test {
+            java.srcDirs += ['src/testShared/java']
+        }
     }
 
     defaultConfig {
@@ -24,15 +34,6 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
-
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments += [
-                        "room.schemaLocation":"$projectDir/schemas".toString(),
-                        "room.incremental":"true",
-                        "room.expandProjection":"true"]
-            }
-        }
     }
 
     buildTypes {
@@ -44,11 +45,11 @@ android {
     
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
     buildFeatures {
         compose true
@@ -69,15 +70,11 @@ android {
 dependencies {
     def lifecycle_version = '2.6.2'
     
-    // Test fixtures dependencies (shared test code)
-    testFixturesImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3'
-    testFixturesImplementation 'junit:junit:4.13.2'
-    
-    // Use test fixtures in unit tests
-    testImplementation(testFixtures(project(":app")))
-    
-    // Use test fixtures in Android tests
-    androidTestImplementation(testFixtures(project(":app")))
+    // Shared test dependencies (available to both test and androidTest)
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3'
+    androidTestImplementation 'junit:junit:4.13.2'
     
     implementation 'androidx.core:core-ktx:1.12.0'
     implementation "androidx.compose.ui:ui:$compose_version"
@@ -86,7 +83,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
     implementation 'androidx.activity:activity-compose:1.8.0'
     implementation "com.google.dagger:hilt-android:2.48"
-    kapt "com.google.dagger:hilt-compiler:2.48"
+    ksp "com.google.dagger:hilt-compiler:2.48"
     // ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     // ViewModel utilities for Compose
@@ -103,7 +100,7 @@ dependencies {
     // Room database
     def room_version = "2.6.0"
     implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
+    ksp "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
 
     testImplementation 'junit:junit:4.13.2'
@@ -120,7 +117,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3"
     androidTestImplementation 'com.google.dagger:hilt-android-testing:2.48'
-    kaptAndroidTest 'com.google.dagger:hilt-android-compiler:2.48'
+    kspAndroidTest 'com.google.dagger:hilt-android-compiler:2.48'
     androidTestImplementation "androidx.arch.core:core-testing:2.2.0"
 
 }
