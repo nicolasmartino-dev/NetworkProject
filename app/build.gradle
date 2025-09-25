@@ -14,7 +14,7 @@ ksp {
 
 android {
     namespace 'com.example.networkproject'
-    compileSdk 34
+    compileSdk 36
     
     // Only include shared code in unit tests to avoid duplicate content roots warning
     sourceSets {
@@ -26,7 +26,7 @@ android {
     defaultConfig {
         applicationId "com.example.networkproject"
         minSdk 21
-        targetSdk 34
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
@@ -68,6 +68,7 @@ android {
 }
 
 dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
     def lifecycle_version = '2.6.2'
     
     // Shared test dependencies (available to both test and androidTest)
