@@ -12,10 +12,8 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import com.example.networkproject.test.TestData
 import java.io.IOException
 import javax.inject.Inject
-import javax.inject.Named
 
 @HiltAndroidTest
 class EmployeeDaoTest {
@@ -45,7 +43,7 @@ class EmployeeDaoTest {
     @Test
     @Throws(Exception::class)
     fun writeUserAndReadInList() = runBlocking {
-        val employee: Employee = TestData.employeeTestList.first()
+        val employee: Employee = Employee(1, "Leanne Graham", "Bret", "Sincere@april.biz")
         employeeDao.insertEmployees(employee)
 
         val byName = employeeDao.loadEmployeeByName("Leanne Graham")

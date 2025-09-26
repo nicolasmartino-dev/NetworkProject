@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
@@ -14,19 +16,21 @@ ksp {
 
 android {
     namespace 'com.example.networkproject'
-    compileSdk 36
+    compileSdk = 36
     
-    // Only include shared code in unit tests to avoid duplicate content roots warning
     sourceSets {
-        test {
-            java.srcDirs += ['src/testShared/java']
+        named("test") {
+            kotlin.srcDir("src/testShared/java")
+        }
+        named("androidTest") {
+            kotlin.srcDir("src/testShared/java")
         }
     }
 
     defaultConfig {
         applicationId "com.example.networkproject"
-        minSdk 21
-        targetSdk 35
+        minSdk 23
+        targetSdk 36
         versionCode 1
         versionName "1.0"
 
